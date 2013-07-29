@@ -24,6 +24,7 @@ bin_SCRIPTS =
 dist_aclocal_DATA =
 man_MANS =
 CLEANFILES =
+MOSTLYCLEANFILES =
 
 bin_SCRIPTS += sortsmill-tig
 dist_aclocal_DATA += sortsmill-tig.m4
@@ -40,3 +41,21 @@ sortsmill-tig.1: sortsmill-tig
 
 endif HAVE_HELP2MAN
 
+# Regenerate the README file.
+readme:
+#	Turn off justification.
+	echo '.na' >  README.nroff
+	echo '.de ad' >> README.nroff
+	echo '..' >> README.nroff
+#	Turn off hyphenation.
+	echo '.nh' >> README.nroff
+	echo '.de hy' >> README.nroff
+	echo '..' >> README.nroff
+#	Copy the manpage source.
+	cat sortsmill-tig.1 >> README.nroff
+#	Generate the page.
+	nroff -man -Tascii README.nroff > ${srcdir}/README
+
+MOSTLYCLEANFILES += README.nroff
+
+.PHONY: readme
