@@ -40,8 +40,10 @@ exec "@GUILE@" -s "$0" ${1+"$@"}
         (only (srfi srfi-26) cute)
         (srfi srfi-37))
 
+(define include-config? #f)
+
 (define (write-c-source includes types)
-  (format #t "#include <config.h>\n\n")
+  (when include-config? (format #t "#include <config.h>\n\n"))
   (format #t "#include <stdio.h>\n")
   (format #t "#include <stdlib.h>\n")
   (format #t "#include <stddef.h>\n")
@@ -287,15 +289,14 @@ exec "@GUILE@" -s "$0" ${1+"$@"}
           (basename (car (command-line))))
   (format #t "Write C code that, when compiled and run, examines C types\nand generates so-called `API instructions'.\n")
   (format #t "\n")
-  (format #t "     --help     display this help and exit\n")
-  (format #t "     --version  output version information and exit\n")
+  (format #t "     --include-config   put `#include <config.h>' at the top of the output\n")
+  (format #t "     --help             display this help and exit\n")
+  (format #t "     --version          output version information and exit\n")
   (format #t "\n")
   (format #t "With no FILE, read standard input.\n")
   (format #t "\n")
-  (format #t "Report ~a bugs at <~a>\n" "@PACKAGE@"
-          "@PACKAGE_BUGREPORT@")
-  (format #t "~a home page: <~a>\n" "@PACKAGE_NAME@"
-          "@PACKAGE_URL@")
+  (format #t "Report ~a bugs at <~a>\n" "@PACKAGE@" "@PACKAGE_BUGREPORT@")
+  (format #t "~a home page: <~a>\n" "@PACKAGE_NAME@" "@PACKAGE_URL@")
   (exit 0))
 
 (define (display-version)
@@ -333,11 +334,15 @@ exec "@GUILE@" -s "$0" ${1+"$@"}
        (reverse
         (args-fold
          (cdr (command-line))
-         (list (option '("help") #f #f
+         (list (option '("include-config") #f #f
+                       (lambda (opt name arg files)
+                         (set! include-config? #t)
+                         files))
+               (option '("help") #f #f
                        (lambda ignored (display-help)))
                (option '("version") #f #f
                        (lambda ignored (display-version))))
-         (lambda (opt name arg . files) (unrecognized-option name))
+         (lambda (opt name arg files) (unrecognized-option name))
          cons
          '() ))])
   (case (length args)
