@@ -1,0 +1,23 @@
+SORTSMILL-TIG(1)                                                                                            SORTSMILL-TIG(1)
+
+
+
+NAME
+       sortsmill-tig - the Sorts Mill Type Inspector Generator
+
+SYNOPSIS
+       sortsmill-tig < file.tig > file.c
+
+DESCRIPTION
+       sortsmill-tig  writes  C code that, when compiled and run, examine the layout of C types and generates so-called `API
+       instructions'.
+
+
+
+
+
+
+
+
+
+                                                                                                            SORTSMILL-TIG(1)
