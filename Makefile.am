@@ -19,5 +19,18 @@
 ACLOCAL_AMFLAGS = -I m4
 
 bin_SCRIPTS = sortsmill-tig
-man_MANS = sortsmill-tig.1
+man_MANS =
+CLEANFILES =
+
+if HAVE_HELP2MAN
+
+man_MANS += sortsmill-tig.1
+CLEANFILES += sortsmill-tig.1
+
+sortsmill-tig.1: sortsmill-tig
+	$(HELP2MAN) --no-info --output=$@					\
+		--name='Sorts Mill Type Inspector Generator'	\
+	 	--source='Sorts Mill' ./sortsmill-tig
+
+endif HAVE_HELP2MAN
 

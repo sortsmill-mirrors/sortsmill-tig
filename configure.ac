@@ -32,19 +32,12 @@ AC_CANONICAL_BUILD                 dnl On what platform are we compiling?
 AC_CANONICAL_HOST                  dnl For what platform are we compiling?
 AC_USE_SYSTEM_EXTENSIONS           dnl Define such macros as _GNU_SOURCE.
 
-#AM_INIT_AUTOMAKE([1.11 dist-xz subdir-objects -Wall -Wno-portability -Werror])
 AM_INIT_AUTOMAKE([1.11 dist-xz -Wall -Wno-portability -Werror])
 
 # I am going to enable silent-rules by default, so builders are
 # more likely to see warnings. Use --disable-silent-rules or "make
 # V=1" if you need to see the rules.
 AM_SILENT_RULES([yes])
-
-## Libtool-related configuration.
-#AM_PROG_AR                          dnl Support for Microsoft linker.
-#LT_INIT([dlopen])                   dnl Initialize libtool.
-#LT_OBJDIR="${lt_cv_objdir}/"
-#AC_SUBST([LT_OBJDIR])
 
 VERSION_MAJOR=`AS_ECHO(["${PACKAGE_VERSION}"]) | sed -e 's/^\([[0-9]][[0-9]]*\).*/\1/'`
 VERSION_MINOR=`AS_ECHO(["${PACKAGE_VERSION}"]) | sed -e 's/^[[0-9]][[0-9]]*\.\([[0-9]][[0-9]]*\).*/\1/'`
@@ -70,6 +63,12 @@ AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_MKDIR_P
 AC_PROG_SED
+
+AC_PATH_PROGS([HELP2MAN],[help2man],[])
+if test x"${HELP2MAN}" = x; then
+   AC_MSG_WARN([GNU help2man not found. No manual page will be made.])
+fi
+AM_CONDITIONAL([HAVE_HELP2MAN],[test x"${HELP2MAN}" != x])
 
 m4_ifdef([GUILE_PROGS],[GUILE_PROGS],
          [AC_MSG_ERROR([
@@ -98,13 +97,13 @@ fi
 # Checks for typedefs, structures, and compiler characteristics.
 
 #--------------------------------------------------------------------------
+#
 # Checks for library functions.
 
 #--------------------------------------------------------------------------
 
 AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([sortsmill-tig],[chmod +x sortsmill-tig])
-AC_CONFIG_FILES([sortsmill-tig.1])
 
 AC_OUTPUT
 
