@@ -2,42 +2,42 @@ SORTSMILL-TIG(1)                 User Commands                SORTSMILL-TIG(1)
 
 
 
-[1mNAME[0m
+NAME
        sortsmill-tig - Sorts Mill Type Inspector Generator
 
-[1mSYNOPSIS[0m
-       [1msortsmill-tig [22m[[4mOPTION[24m]... [[4mFILE[24m]
+SYNOPSIS
+       sortsmill-tig [OPTION]... [FILE]
 
-[1mDESCRIPTION[0m
+DESCRIPTION
        Write C code that, when compiled and run, examines C types and
        generates so-called `API instructions'.
 
        Mandatory arguments to long options are mandatory for short options,
        too.
 
-       [1m-c[22m, [1m--include-config[0m
+       -c, --include-config
               put `#include <config.h>' at the top of the output
 
-       [1m-o[22m, [1m--output[22m=[4mFILE[0m
+       -o, --output=FILE
               send output to `FILE' instead of standard output
 
-       [1m--help [22mdisplay this help and exit
+       --help display this help and exit
 
-       [1m--version[0m
+       --version
               output version information and exit
 
        With no FILE, read standard input.
 
-[1mAUTHOR[0m
+AUTHOR
        Written by Barry Schwartz.
 
-[1mREPORTING BUGS[0m
+REPORTING BUGS
        Report sortsmill-tig bugs at
        <http://bitbucket.org/sortsmill/sortsmill-tig/issues>
        Sorts Mill TIG home page:
        <http://bitbucket.org/sortsmill/sortsmill-tig>
 
-[1mCOPYRIGHT[0m
+COPYRIGHT
        Copyright (C) 2013 Khaled Hosny and Barry Schwartz
 
        License GPLv3+: GNU GPL version 3 or later

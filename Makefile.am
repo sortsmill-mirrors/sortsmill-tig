@@ -54,7 +54,7 @@ readme:
 #	Copy the manpage source.
 	cat sortsmill-tig.1 >> README.nroff
 #	Generate the page.
-	nroff -man -Tascii README.nroff > ${srcdir}/README
+	groff -man -Tascii -P -c -P -b -P -u README.nroff > ${srcdir}/README
 
 MOSTLYCLEANFILES += README.nroff
 
