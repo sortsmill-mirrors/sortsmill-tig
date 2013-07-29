@@ -1,5 +1,7 @@
 #!/bin/sh
-# Run this to generate the `configure' script.
+#
+# You may run this to generate the `configure' script if it is not
+# present or needs updating.
 
 test -n "$srcdir" || srcdir=`dirname "$0"`
 test -n "$srcdir" || srcdir=.
