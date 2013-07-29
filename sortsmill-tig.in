@@ -41,6 +41,7 @@ exec "@GUILE@" -s "$0" ${1+"$@"}
         (srfi srfi-37))
 
 (define include-config? #f)
+(define output-file #f)
 
 (define (write-c-source includes types)
   (when include-config? (format #t "#include <config.h>\n\n"))
@@ -289,9 +290,11 @@ exec "@GUILE@" -s "$0" ${1+"$@"}
           (basename (car (command-line))))
   (format #t "Write C code that, when compiled and run, examines C types\nand generates so-called `API instructions'.\n")
   (format #t "\n")
-  (format #t "  --include-config   put `#include <config.h>' at the top of the output\n")
-  (format #t "  --help             display this help and exit\n")
-  (format #t "  --version          output version information and exit\n")
+  (format #t "Mandatory arguments to long options are mandatory for short options, too.\n")
+  (format #t "  -c, --include-config  put `#include <config.h>' at the top of the output\n")
+  (format #t "  -o, --output=FILE     send output to `FILE' instead of standard output\n")
+  (format #t "      --help            display this help and exit\n")
+  (format #t "      --version         output version information and exit\n")
   (format #t "\n")
   (format #t "With no FILE, read standard input.\n")
   (format #t "\n")
@@ -330,22 +333,34 @@ exec "@GUILE@" -s "$0" ${1+"$@"}
          [instructions (read)])
     (write-c-source includes instructions)))
 
-(let ([args
-       (reverse
-        (args-fold
-         (cdr (command-line))
-         (list (option '("include-config") #f #f
-                       (lambda (opt name arg files)
-                         (set! include-config? #t)
-                         files))
-               (option '("help") #f #f
-                       (lambda ignored (display-help)))
-               (option '("version") #f #f
-                       (lambda ignored (display-version))))
-         (lambda (opt name arg files) (unrecognized-option name))
-         cons
-         '() ))])
+(define (do-the-filtering-given-args args)
   (case (length args)
     [(0) (do-the-filtering)]
     [(1) (with-input-from-file (car args) do-the-filtering)]
     [else (too-many-arguments args)]))
+
+(let ([args
+       (reverse
+        (args-fold
+         (cdr (command-line))
+         (list (option '(#\c "include-config") #f #f
+                       (lambda (opt name arg cl-args)
+                         (set! include-config? #t)
+                         cl-args))
+               (option '(#\o "output") #t #f
+                       (lambda (opt name arg cl-args)
+                         (set! output-file arg)
+                         cl-args))
+               (option '("help") #f #f
+                       (lambda ignored (display-help)))
+               (option '("version") #f #f
+                       (lambda ignored (display-version))))
+         (lambda (opt name arg cl-args)
+           (unrecognized-option name))
+         cons
+         '() ))])
+  (if output-file
+      [with-output-to-file output-file
+        (lambda ()
+          (do-the-filtering-given-args args))]
+      [do-the-filtering-given-args args]))
