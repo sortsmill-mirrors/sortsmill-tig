@@ -27,7 +27,7 @@ sortsmill-tig may be found at https://bitbucket.org/sortsmill/sortsmill-tig])
          ${SED} -e 's/^[[0-9]][[0-9]]*\.[[0-9]][[0-9]]*\.\([[0-9]][[0-9]]*\).*/\1/'`
       SORTSMILL_TIG_VERSION_EXTRA=`AS_ECHO(["${SORTSMILL_TIG_VERSION}"]) | \
          ${SED} -e 's/^[[0-9]][[0-9]]*\.[[0-9]][[0-9]]*\.[[0-9]][[0-9]]*\(.*\)/\1/' -e 's/^_//'`
-      SORTSMILL_TIG_VERSION_EXTRA_SHORT=`AS_ECHO(["${VERSION_EXTRA}"]) | \
+      SORTSMILL_TIG_VERSION_EXTRA_SHORT=`AS_ECHO(["${SORTSMILL_TIG_VERSION_EXTRA}"]) | \
          ${SED} -e 's/alpha/a/' -e 's/beta/b/'`
       SORTSMILL_TIG_SHORT_VERSION="${SORTSMILL_TIG_VERSION_MAJOR}.${SORTSMILL_TIG_VERSION_MINOR}.${SORTSMILL_TIG_VERSION_PATCH}${SORTSMILL_TIG_VERSION_EXTRA_SHORT}"
       AC_SUBST([SORTSMILL_TIG])
