@@ -18,9 +18,15 @@
 
 ACLOCAL_AMFLAGS = -I m4
 
-bin_SCRIPTS = sortsmill-tig
+aclocaldir = ${datadir}/aclocal
+
+bin_SCRIPTS =
+dist_aclocal_DATA =
 man_MANS =
 CLEANFILES =
+
+bin_SCRIPTS += sortsmill-tig
+dist_aclocal_DATA += sortsmill-tig.m4
 
 if HAVE_HELP2MAN
 
