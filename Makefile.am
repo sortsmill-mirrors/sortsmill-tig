@@ -42,7 +42,7 @@ sortsmill-tig.1: sortsmill-tig
 endif HAVE_HELP2MAN
 
 # Regenerate the README file.
-readme:
+readme: sortsmill-tig.1
 #	Turn off justification.
 	echo '.na' >  README.nroff
 	echo '.de ad' >> README.nroff
