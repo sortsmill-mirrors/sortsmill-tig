@@ -27,7 +27,7 @@ EXTRA_DIST =
 CLEANFILES =
 MOSTLYCLEANFILES =
 
-EXTRA_DIST += m4/gnulib-cache.m4
+EXTRA_DIST += m4/gnulib-cache.m4 config/gitlog-to-changelog
 
 bin_SCRIPTS += sortsmill-tig
 dist_aclocal_DATA += sortsmill-tig.m4
