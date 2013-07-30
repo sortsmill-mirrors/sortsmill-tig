@@ -13,7 +13,7 @@ AC_DEFUN([StM_PROG_SORTSMILL_TIG],[
    AC_PROG_SED
    AC_PATH_PROGS([SORTSMILL_TIG],[sortsmill-tig],[])
    if test -z "${SORTSMILL_TIG}"; then
-      m4_ifset([$1],[$1],[
+      m4_ifval([$1],[$1],[
          AC_MSG_ERROR([sortsmill-tig is needed but was not found in \$PATH
 sortsmill-tig may be found at https://bitbucket.org/sortsmill/sortsmill-tig])
       ])
