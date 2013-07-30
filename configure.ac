@@ -84,6 +84,22 @@ from http://www.gnu.org/software/guile/
 but we will try the one we found.])
 fi
 
+AC_CACHE_CHECK([for `git log', for ChangeLog production],
+   [ac_cv_path_GITCL],[
+   AC_PATH_PROGS_FEATURE_CHECK([GITCL],[git],[
+      if ${ac_path_GITCL} help log 2>&1 | ${EGREP} -q -i 'Show commit logs'; then
+         ac_cv_path_GITCL=${ac_path_GITCL}
+         ac_path_GITCL_found=:
+      fi])])
+if test -z "${ac_cv_path_GITCL}"; then
+   AC_MSG_WARN([`git' not found. Using /bin/false instead.
+           The Makefile will try to warn you if this is a problem.])
+   GITCL="/bin/false"
+else
+   GITCL="${ac_cv_path_GITCL}"
+fi
+AC_SUBST([GITCL])
+
 #--------------------------------------------------------------------------
 #
 # Checks for libraries.

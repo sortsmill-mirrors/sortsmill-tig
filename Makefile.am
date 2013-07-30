@@ -74,8 +74,8 @@ make-changelog:
 	fi; \
 	if test -z "$${gitdir}"; then \
 		$(MAKE) $(AM_MAKEFLAGS) possible-changelog-error; \
-	elif (cd "$${gitdir}" && git log > /dev/null 2> /dev/null); then \
-		(cd "$${gitdir}" && (git log | $(SHELL) $(abs_top_srcdir)/config/gitlog-to-changelog)) \
+	elif (cd "$${gitdir}" && $(GITCL) log > /dev/null 2> /dev/null); then \
+		(cd "$${gitdir}" && ($(GITCL) log | $(SHELL) $(abs_top_srcdir)/config/gitlog-to-changelog)) \
 			> $(distdir)/ChangeLog; \
 	else \
 		$(MAKE) $(AM_MAKEFLAGS) possible-changelog-error; \
@@ -85,9 +85,9 @@ possible-changelog-error:
 	@if $(AWK) -- 'NR==1 {print $0}' < $(top_srcdir)/ChangeLog | \
 			$(EGREP) -q '^[[:space:]]*-\*- fundamental -\*-'; then \
 		echo ""; \
-		echo "*******************************************************************************************"; \
-		echo "***** ERROR: Please see the generated ChangeLog file within the tarball you just made *****"; \
-		echo "*******************************************************************************************"; \
+		echo "********************************************************************************************"; \
+		echo "***** I could not make the ChangeLog. Please install Git and try to remake the tarball *****"; \
+		echo "********************************************************************************************"; \
 		echo ""; \
 		echo "If you do not mind, please report that the ChangeLog is missing." > $(distdir)/ChangeLog; \
 		echo "Report at: https://bitbucket.org/sortsmill/sortsmill-tig/issues" >> $(distdir)/ChangeLog; \
