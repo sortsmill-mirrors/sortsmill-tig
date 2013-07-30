@@ -19,7 +19,7 @@
 
 AC_PREREQ([2.69])
 AC_INIT([Sorts Mill TIG],
-        [1.0.0],
+        [1.0.1],
         [http://bitbucket.org/sortsmill/sortsmill-tig/issues],
         [sortsmill-tig],
         [http://bitbucket.org/sortsmill/sortsmill-tig])
