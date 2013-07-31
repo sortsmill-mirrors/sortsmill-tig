@@ -9,6 +9,12 @@ test -n "$srcdir" || srcdir=.
 olddir=`pwd`
 cd $srcdir
 
+echo -n "checking for sortsmill-changeloggerize... "
+which sortsmill-changeloggerize || {
+	echo "*** No sortsmill-changeloggerize found, please install it ***"
+	exit 1
+}
+
 echo -n "checking for gnulib-tool... "
 which gnulib-tool || {
 	echo "*** No gnulib-tool found, please install it ***"
@@ -20,6 +26,9 @@ which autoreconf || {
 	echo "*** No autoreconf found, please install it ***"
 	exit 1
 }
+
+echo "running sortsmill-changeloggerize -d config"
+sortsmill-changeloggerize -d config || exit $?
 
 echo "running gnulib-tool --update"
 gnulib-tool --update || exit $?
