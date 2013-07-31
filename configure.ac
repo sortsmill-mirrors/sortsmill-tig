@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, see <http://www.gnu.org/licenses/>.
 
-AC_PREREQ([2.69])
+AC_PREREQ([2.68])
 AC_INIT([Sorts Mill TIG],
         [1.0.1],
         [http://bitbucket.org/sortsmill/sortsmill-tig/issues],
