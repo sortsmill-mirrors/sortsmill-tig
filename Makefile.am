@@ -18,18 +18,13 @@
 
 include $(top_srcdir)/config/sortsmill-dist-changelog.am
 
-ACLOCAL_AMFLAGS = -I m4
-
 aclocaldir = ${datadir}/aclocal
 
 bin_SCRIPTS =
 dist_aclocal_DATA =
 man_MANS =
-EXTRA_DIST =
 CLEANFILES =
 MOSTLYCLEANFILES =
-
-EXTRA_DIST += m4/gnulib-cache.m4 config/gitlog-to-changelog
 
 bin_SCRIPTS += sortsmill-tig
 dist_aclocal_DATA += sortsmill-tig.m4

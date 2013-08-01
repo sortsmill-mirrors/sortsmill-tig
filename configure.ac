@@ -26,7 +26,6 @@ AC_INIT([Sorts Mill TIG],
 
 AC_CONFIG_SRCDIR([sortsmill-tig.in])
 
-AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([config])        dnl Where things like install-sh go.
 AC_CANONICAL_BUILD                 dnl On what platform are we compiling?
 AC_CANONICAL_HOST                  dnl For what platform are we compiling?
@@ -85,22 +84,6 @@ ${PACKAGE_NAME} is written for Guile 2.0.x
 from http://www.gnu.org/software/guile/
 but we will try the one we found.])
 fi
-
-AC_CACHE_CHECK([for `git log', for ChangeLog production],
-   [ac_cv_path_GITCL],[
-   AC_PATH_PROGS_FEATURE_CHECK([GITCL],[git],[
-      if ${ac_path_GITCL} help log 2>&1 | ${EGREP} -q -i 'Show commit logs'; then
-         ac_cv_path_GITCL=${ac_path_GITCL}
-         ac_path_GITCL_found=:
-      fi])])
-if test -z "${ac_cv_path_GITCL}"; then
-   AC_MSG_WARN([`git' not found. Using /bin/false instead.
-           The Makefile will try to warn you if this is a problem.])
-   GITCL="/bin/false"
-else
-   GITCL="${ac_cv_path_GITCL}"
-fi
-AC_SUBST([GITCL])
 
 #--------------------------------------------------------------------------
 #
