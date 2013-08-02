@@ -18,6 +18,8 @@
 
 include config/sortsmill-dist-changelog.am
 
+ACLOCAL_AMFLAGS = -I m4 --install
+
 aclocaldir = ${datadir}/aclocal
 
 bin_SCRIPTS =

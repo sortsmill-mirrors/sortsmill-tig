@@ -26,6 +26,7 @@ AC_INIT([Sorts Mill TIG],
 
 AC_CONFIG_SRCDIR([sortsmill-tig.in])
 
+AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([config])        dnl Where things like install-sh go.
 AC_CANONICAL_BUILD                 dnl On what platform are we compiling?
 AC_CANONICAL_HOST                  dnl For what platform are we compiling?
@@ -38,19 +39,7 @@ AM_INIT_AUTOMAKE([1.11 dist-xz -Wall -Wno-portability -Werror])
 # V=1" if you need to see the rules.
 AM_SILENT_RULES([yes])
 
-VERSION_MAJOR=`AS_ECHO(["${PACKAGE_VERSION}"]) | sed -e 's/^\([[0-9]][[0-9]]*\).*/\1/'`
-VERSION_MINOR=`AS_ECHO(["${PACKAGE_VERSION}"]) | sed -e 's/^[[0-9]][[0-9]]*\.\([[0-9]][[0-9]]*\).*/\1/'`
-VERSION_PATCH=`AS_ECHO(["${PACKAGE_VERSION}"]) | sed -e 's/^[[0-9]][[0-9]]*\.[[0-9]][[0-9]]*\.\([[0-9]][[0-9]]*\).*/\1/'`
-VERSION_EXTRA=`AS_ECHO(["${PACKAGE_VERSION}"]) | sed -e 's/^[[0-9]][[0-9]]*\.[[0-9]][[0-9]]*\.[[0-9]][[0-9]]*\(.*\)/\1/' \
-                                                     -e 's/^_//'`
-VERSION_EXTRA_SHORT=`AS_ECHO(["${VERSION_EXTRA}"]) | sed -e 's/alpha/a/' -e 's/beta/b/'`
-PACKAGE_VERSION_SHORT=`AS_ECHO(["${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}${VERSION_EXTRA_SHORT}"])`
-AC_SUBST([VERSION_MAJOR])
-AC_SUBST([VERSION_MINOR])
-AC_SUBST([VERSION_PATCH])
-AC_SUBST([VERSION_EXTRA])
-AC_SUBST([VERSION_EXTRA_SHORT])
-AC_SUBST([PACKAGE_VERSION_SHORT])
+StM_ANALYZE_PACKAGE_VERSION
 
 #--------------------------------------------------------------------------
 #
@@ -65,10 +54,15 @@ AC_PROG_MKDIR_P
 AC_PROG_SED
 StM_PROG_SORTSMILL_CHANGELOGGER
 
-AC_PATH_PROGS([HELP2MAN],[help2man],[])
-if test x"${HELP2MAN}" = x; then
-   AC_MSG_WARN([GNU help2man not found. No manual page will be made.])
-fi
+# FIXME: Put this in the Autoconf Archive.
+StM_PATH_PROGS_CACHED_AND_PRECIOUS([HELP2MAN],[GNU help2man command],
+   [help2man],[
+      if LC_ALL=C LANG=C ${ac_path_HELP2MAN} --version 2>&1 | \
+              LC_ALL=C LANG=C ${EGREP} -q "Brendan O'Dea"; then
+         ac_cv_path_HELP2MAN=${ac_path_HELP2MAN}
+         ac_path_HELP2MAN_found=:
+      fi
+   ])
 AM_CONDITIONAL([HAVE_HELP2MAN],[test x"${HELP2MAN}" != x])
 
 m4_ifdef([GUILE_PROGS],[GUILE_PROGS],
