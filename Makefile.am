@@ -45,26 +45,10 @@ endif HAVE_HELP2MAN
 
 #--------------------------------------------------------------------------
 #
-# ‘make readme’ regenerates the README file.
-#
-# This target is meant for developers.
+# ‘make readme’ regenerates the README file. This target is meant for
+# developers and requires groff.
 
-.PHONY: readme
-
-readme: sortsmill-tig.1
-#	Turn off justification.
-	echo '.na' >  README.nroff
-	echo '.de ad' >> README.nroff
-	echo '..' >> README.nroff
-#	Turn off hyphenation.
-	echo '.nh' >> README.nroff
-	echo '.de hy' >> README.nroff
-	echo '..' >> README.nroff
-#	Copy the manpage source.
-	cat sortsmill-tig.1 >> README.nroff
-#	Generate the page.
-	groff -man -Tascii -P -c -P -b -P -u README.nroff > $(srcdir)/README
-
-MOSTLYCLEANFILES += README.nroff
+PACKAGE_README = $(srcdir)/README
+@make_readme@
 
 #--------------------------------------------------------------------------

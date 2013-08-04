@@ -54,15 +54,7 @@ AC_PROG_MKDIR_P
 AC_PROG_SED
 StM_PROG_SORTSMILL_CHANGELOGGER
 
-# FIXME: Put this in the Autoconf Archive.
-StM_PATH_PROGS_CACHED_AND_PRECIOUS([HELP2MAN],[GNU help2man command],
-   [help2man],[
-      if LC_ALL=C LANG=C ${ac_path_HELP2MAN} --version 2>&1 | \
-              LC_ALL=C LANG=C ${EGREP} -q "Brendan O'Dea"; then
-         ac_cv_path_HELP2MAN=${ac_path_HELP2MAN}
-         ac_path_HELP2MAN_found=:
-      fi
-   ])
+StM_PROG_HELP2MAN
 AM_CONDITIONAL([HAVE_HELP2MAN],[test x"${HELP2MAN}" != x])
 
 m4_ifdef([GUILE_PROGS],[GUILE_PROGS],
@@ -96,6 +88,8 @@ fi
 # Checks for library functions.
 
 #--------------------------------------------------------------------------
+
+StM_MAKE_README([make_readme],[sortsmill-tig.1])
 
 AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([sortsmill-tig],[chmod +x sortsmill-tig])
