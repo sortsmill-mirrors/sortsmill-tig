@@ -16,8 +16,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, see <http://www.gnu.org/licenses/>.
 
-include config/sortsmill-dist-changelog.am
-
 ACLOCAL_AMFLAGS = -I m4 --install
 
 aclocaldir = ${datadir}/aclocal
@@ -42,6 +40,13 @@ sortsmill-tig.1: sortsmill-tig
 	 	--source='Sorts Mill' ./sortsmill-tig
 
 endif HAVE_HELP2MAN
+
+#--------------------------------------------------------------------------
+# Automatic ChangeLog generation at `make dist', if one has
+# sortsmill-changelogger.
+
+dist-hook: dist-changelog
+@dist_changelog_rules@
 
 #--------------------------------------------------------------------------
 #
